@@ -10,7 +10,7 @@
 // >;
 
 export async function tryCatch<ResultType>(
-  promiseCallBack: () => Promise<ResultType>
+  promiseCallBack: () => Promise<ResultType>,
 ): Promise<
   | {
       result: Awaited<ResultType>;

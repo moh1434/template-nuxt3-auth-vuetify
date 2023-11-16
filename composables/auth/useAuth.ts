@@ -1,5 +1,5 @@
-import type { UserI } from "~~/types";
-import { useAuthUser } from "./useAuthUser";
+import { useAuthUser } from './useAuthUser';
+import type { UserI } from '~~/types';
 
 export const useAuth = () => {
   const authUser = useAuthUser();
@@ -13,14 +13,16 @@ export const useAuth = () => {
   // };
 
   const login = async (username: string, password: string) => {
-    const loginResponse = await useWrapFetch<UserI>("/auth/login/", {
-      method: "POST",
+    const loginResponse = await useWrapFetch<UserI>('/auth/login/', {
+      method: 'POST',
       body: {
         username,
         password,
       },
     });
-    if (!loginResponse.data.value) return;
+    if (!loginResponse.data.value) {
+      return;
+    }
 
     setUser(loginResponse.data.value);
 
@@ -28,7 +30,7 @@ export const useAuth = () => {
   };
 
   const logout = async () => {
-   const response = await useWrapFetch<UserI>(`/auth/signout/`);
+    const response = await useWrapFetch<UserI>('/auth/signout/');
     if (response.error.value) {
       return;
     }
@@ -39,7 +41,7 @@ export const useAuth = () => {
 
   const me = async () => {
     if (!authUser.value) {
-      const response = await useWrapFetch<UserI>("/auth/me/", {}, null);
+      const response = await useWrapFetch<UserI>('/auth/me/', {}, null);
       if (!response.data.value) {
         // setCookie(null)
         return;

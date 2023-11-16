@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { mdiChevronRight } from '@mdi/js';
-const emit = defineEmits(['success'])
+const emit = defineEmits(['success']);
 
-const { login } = useAuth()
+const { login } = useAuth();
 
 const config = useRuntimeConfig();
-const formRef = ref<any>(null); //vuetify <v-form ref="formRef"
+const formRef = ref<any>(null); // vuetify <v-form ref="formRef"
 const isValidForm = ref(null);
 const form = reactive({
   data: {
@@ -14,49 +14,65 @@ const form = reactive({
   },
   error: '',
   pending: false,
-})
+});
 
 async function onLoginClick() {
   formRef.value.validate();
-  if (!isValidForm.value) return
+  if (!isValidForm.value) {
+    return;
+  }
 
   try {
-    form.error = ''
-    form.pending = true
+    form.error = '';
+    form.pending = true;
 
-    const authUser = await login(form.data.username, form.data.password)
-    if (!authUser) return;
+    const authUser = await login(form.data.username, form.data.password);
+    if (!authUser) {
+      return;
+    }
 
-    emit('success')
-  }
-
-  finally {
-    form.pending = false
+    emit('success');
+  } finally {
+    form.pending = false;
   }
 }
-
-
 </script>
 
 <template>
-  <v-form v-model="isValidForm" ref="formRef">
+  <v-form ref="formRef" v-model="isValidForm">
     <v-card class="mx-auto font-weight-bold" max-width="344" title="User Login">
       <v-container>
-        <v-text-field v-model="form.data.username" color="primary" label="Username" variant="underlined" required>
-        </v-text-field>
+        <v-text-field
+          v-model="form.data.username"
+          color="primary"
+          label="Username"
+          variant="underlined"
+          required
+        />
 
-        <v-text-field v-model="form.data.password" color="primary" label="Password" placeholder="Enter your password"
-          variant="underlined" required></v-text-field>
+        <v-text-field
+          v-model="form.data.password"
+          color="primary"
+          label="Password"
+          placeholder="Enter your password"
+          variant="underlined"
+          required
+        />
       </v-container>
 
-      <v-divider></v-divider>
+      <v-divider />
 
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-spacer />
 
-        <v-btn color="success" :disabled="form.pending" :loading="form.pending" @click.prevent="onLoginClick">
+        <v-btn
+          color="success"
+          :disabled="form.pending"
+          :loading="form.pending"
+          @click.prevent="onLoginClick"
+        >
           Login
-          <v-icon :icon="mdiChevronRight" end></v-icon>
+          <v-icon :icon="mdiChevronRight" end />
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -65,16 +81,32 @@ async function onLoginClick() {
   <br /><br /><br /><br />
 
   <v-card class="mx-auto px-6 py-8" max-width="344">
-    <v-form v-model="isValidForm" ref="formRef">
-      <v-text-field v-model="form.data.username" class="mb-2" required label="Username"></v-text-field>
+    <v-form ref="formRef" v-model="isValidForm">
+      <v-text-field
+        v-model="form.data.username"
+        class="mb-2"
+        required
+        label="Username"
+      />
 
-      <v-text-field v-model="form.data.password" required label="Password" placeholder="Enter your password">
-      </v-text-field>
+      <v-text-field
+        v-model="form.data.password"
+        required
+        label="Password"
+        placeholder="Enter your password"
+      />
 
-      <br>
+      <br />
 
-      <v-btn :disabled="isValidForm || form.pending" :loading="form.pending" block color="success" size="large"
-        variant="elevated" @click.prevent="onLoginClick">
+      <v-btn
+        :disabled="isValidForm || form.pending"
+        :loading="form.pending"
+        block
+        color="success"
+        size="large"
+        variant="elevated"
+        @click.prevent="onLoginClick"
+      >
         Login
       </v-btn>
     </v-form>
