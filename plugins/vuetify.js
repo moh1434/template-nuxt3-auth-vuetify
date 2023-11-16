@@ -5,6 +5,7 @@ import { ar } from "vuetify/locale";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
+    ssr: true,
     defaults: {
       nuxt: true,
     },

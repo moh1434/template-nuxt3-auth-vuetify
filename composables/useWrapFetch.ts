@@ -1,6 +1,6 @@
-import { FetchOptions } from "ohmyfetch";
-import { tryCatch } from "~~/helpers/tryCatch";
-import { alertsTypes, useAlerts } from "./useAlerts";
+import { type FetchOptions } from "ohmyfetch";
+
+import {type alertsTypes, useAlerts } from "./useAlerts";
 export async function useWrapFetch<response>(
   url: string,
   opts: FetchOptions = {},
@@ -15,18 +15,20 @@ export async function useWrapFetch<response>(
 
   //
   const config = useRuntimeConfig();
+
   if (!opts.baseURL) {
-    opts.baseURL = config.public.baseURL;
+    opts.baseURL = config.public.EXTERNAL_API_URL;
   }
   opts.credentials = "include";
-  console.log(opts.credentials);
-  const theResponse = await tryCatch<response>(async () => $fetch(url, opts));
-  if (alertTypeWhenError && theResponse.error) {
+
+  const theResponse = await useFetch<response>( url, opts as any );
+
+  if (alertTypeWhenError && theResponse.error.value?.message) {
     // if (theResponse.error.response.status == 401) {
     //TODO: uncomment this? it depends on the backend
 
     // }
-    useAlerts().setAlert(theResponse.error, alertTypeWhenError);
+    useAlerts().setAlert(theResponse.error.value?.message, alertTypeWhenError);
   }
   return theResponse;
 }

@@ -1,4 +1,4 @@
-import { UserI } from "~~/types";
+import type { UserI } from "~~/types";
 import { useAuthUser } from "./useAuthUser";
 
 export const useAuth = () => {
@@ -13,38 +13,38 @@ export const useAuth = () => {
   // };
 
   const login = async (username: string, password: string) => {
-    const { result } = await useWrapFetch<UserI>("auth/login", {
+    const loginResponse = await useWrapFetch<UserI>("/auth/login/", {
       method: "POST",
       body: {
         username,
         password,
       },
     });
-    if (!result) return;
+    if (!loginResponse.data.value) return;
 
-    setUser(result);
+    setUser(loginResponse.data.value);
 
     return authUser;
   };
 
   const logout = async () => {
-    const { result, error } = await useWrapFetch<UserI>(`/auth/signout`);
-    if (error) {
+   const response = await useWrapFetch<UserI>(`/auth/signout/`);
+    if (response.error.value) {
       return;
     }
 
-    setUser(result);
+    setUser(response.data.value);
     return true;
   };
 
   const me = async () => {
     if (!authUser.value) {
-      const { result } = await useWrapFetch<UserI>("/auth/me", {}, null);
-      if (!result) {
+      const response = await useWrapFetch<UserI>("/auth/me/", {}, null);
+      if (!response.data.value) {
         // setCookie(null)
         return;
       }
-      setUser(result);
+      setUser(response.data.value);
     }
 
     return authUser;

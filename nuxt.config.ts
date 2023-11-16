@@ -7,28 +7,22 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       isDebug: process.env.NODE_ENV == "development",
-      baseURL:
-        process.env.NODE_ENV == "production"
-          ? process.env.BASE_URL
-          : "http://localhost:3000/v1/",
+      EXTERNAL_API_URL: process.env.EXTERNAL_API_URL ?? "set BASE_URL in .env please",
     },
   },
-  css: ["vuetify/styles"], // vuetify ships precompiled css, no need to import sass
-  vite: {
-    // @ts-ignore
-    // curently this will lead to a type error, but hopefully will be fixed soon #justBetaThings
-    ssr: {
-      noExternal: ["vuetify"], // add the vuetify vite plugin
-    },
+  css: ['vuetify/lib/styles/main.sass'],
+  build: {
+    transpile: ['vuetify'],
   },
   modules: [
     // @ts-ignore
     // this adds the vuetify vite plugin
     // also produces type errors in the current beta release
     async (options, nuxt) => {
-      nuxt.hooks.hook("vite:extendConfig", (config: any) => {
-        config.plugins.push(vuetify());
-      });
+      nuxt.hooks.hook('vite:extendConfig', (config: any ) => config.plugins.push(
+        vuetify()
+      ))
     },
   ],
+  devtools: { enabled: true },
 });
