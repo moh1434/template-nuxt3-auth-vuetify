@@ -1,5 +1,5 @@
-import type { UserI } from '~~/types';
+import type { UserI } from '~~/types'
 
-export const useAuthUser = () => {
-  return useState<UserI | null>('user', () => null);
-};
+export function useAuthUser() {
+  return useState<UserI | null>('user', () => null)
+}

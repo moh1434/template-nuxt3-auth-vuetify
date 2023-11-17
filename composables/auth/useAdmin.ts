@@ -1,11 +1,10 @@
-export const useAdmin = () => {
-  const authUser = useAuthUser();
+export function useAdmin() {
+  const authUser = useAuthUser()
 
   return computed(() => {
-    if (!authUser.value) {
-      return false;
-    }
+    if (!authUser.value)
+      return false
 
-    return authUser.value.role == 'ADMIN';
-  });
-};
+    return authUser.value.role === 'ADMIN'
+  })
+}

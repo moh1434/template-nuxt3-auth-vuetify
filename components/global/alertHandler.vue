@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { mdiClose } from '@mdi/js';
-const { alertsList, clearAlert } = useAlerts();
+import { mdiClose } from '@mdi/js'
+
+const { alertsList, clearAlert } = useAlerts()
 </script>
 
 <template>
   <div class="alert-handler">
     <ClientOnly>
-      <div v-for="(alertList, type) in alertsList" :key="type">
+      <div
+        v-for="(alertList, type) in alertsList"
+        :key="type"
+      >
         <v-alert
           v-for="alert in alertList"
           :key="alert.id"
@@ -15,8 +19,14 @@ const { alertsList, clearAlert } = useAlerts();
         >
           {{ alert.message }}
           <template #close>
-            <v-btn icon @click="clearAlert(alert.id)">
-              <v-icon size="large" :icon="mdiClose" />
+            <v-btn
+              icon
+              @click="clearAlert(alert.id)"
+            >
+              <v-icon
+                size="large"
+                :icon="mdiClose"
+              />
             </v-btn>
           </template>
         </v-alert>

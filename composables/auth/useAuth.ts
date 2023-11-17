@@ -1,12 +1,12 @@
-import { useAuthUser } from './useAuthUser';
-import type { UserI } from '~~/types';
+import { useAuthUser } from './useAuthUser'
+import type { UserI } from '~~/types'
 
-export const useAuth = () => {
-  const authUser = useAuthUser();
+export function useAuth() {
+  const authUser = useAuthUser()
 
   const setUser = (user: any) => {
-    authUser.value = user;
-  };
+    authUser.value = user
+  }
 
   // const setCookie = (cookie: any) => {
   //   cookie.value = cookie;
@@ -19,42 +19,40 @@ export const useAuth = () => {
         username,
         password,
       },
-    });
-    if (!loginResponse.data.value) {
-      return;
-    }
+    })
+    if (!loginResponse.data.value)
+      return
 
-    setUser(loginResponse.data.value);
+    setUser(loginResponse.data.value)
 
-    return authUser;
-  };
+    return authUser
+  }
 
   const logout = async () => {
-    const response = await useWrapFetch<UserI>('/auth/signout/');
-    if (response.error.value) {
-      return;
-    }
+    const response = await useWrapFetch<UserI>('/auth/signout/')
+    if (response.error.value)
+      return
 
-    setUser(response.data.value);
-    return true;
-  };
+    setUser(response.data.value)
+    return true
+  }
 
   const me = async () => {
     if (!authUser.value) {
-      const response = await useWrapFetch<UserI>('/auth/me/', {}, null);
+      const response = await useWrapFetch<UserI>('/auth/me/', {}, null)
       if (!response.data.value) {
         // setCookie(null)
-        return;
+        return
       }
-      setUser(response.data.value);
+      setUser(response.data.value)
     }
 
-    return authUser;
-  };
+    return authUser
+  }
 
   return {
     login,
     logout,
     me,
-  };
-};
+  }
+}

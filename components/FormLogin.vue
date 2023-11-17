@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-import { mdiChevronRight } from '@mdi/js';
-const emit = defineEmits(['success']);
+import { mdiChevronRight } from '@mdi/js'
 
-const { login } = useAuth();
+const emit = defineEmits(['success'])
 
-const config = useRuntimeConfig();
-const formRef = ref<any>(null); // vuetify <v-form ref="formRef"
-const isValidForm = ref(null);
+const { login } = useAuth()
+
+const config = useRuntimeConfig()
+const formRef = ref<any>(null) // vuetify <v-form ref="formRef"
+const isValidForm = ref(null)
 const form = reactive({
   data: {
     username: config.public.isDebug ? 'name_' : '',
@@ -14,33 +15,39 @@ const form = reactive({
   },
   error: '',
   pending: false,
-});
+})
 
 async function onLoginClick() {
-  formRef.value.validate();
-  if (!isValidForm.value) {
-    return;
-  }
+  formRef.value.validate()
+  if (!isValidForm.value)
+    return
 
   try {
-    form.error = '';
-    form.pending = true;
+    form.error = ''
+    form.pending = true
 
-    const authUser = await login(form.data.username, form.data.password);
-    if (!authUser) {
-      return;
-    }
+    const authUser = await login(form.data.username, form.data.password)
+    if (!authUser)
+      return
 
-    emit('success');
-  } finally {
-    form.pending = false;
+    emit('success')
+  }
+  finally {
+    form.pending = false
   }
 }
 </script>
 
 <template>
-  <v-form ref="formRef" v-model="isValidForm">
-    <v-card class="mx-auto font-weight-bold" max-width="344" title="User Login">
+  <v-form
+    ref="formRef"
+    v-model="isValidForm"
+  >
+    <v-card
+      class="mx-auto font-weight-bold"
+      max-width="344"
+      title="User Login"
+    >
       <v-container>
         <v-text-field
           v-model="form.data.username"
@@ -72,16 +79,25 @@ async function onLoginClick() {
           @click.prevent="onLoginClick"
         >
           Login
-          <v-icon :icon="mdiChevronRight" end />
+          <v-icon
+            :icon="mdiChevronRight"
+            end
+          />
         </v-btn>
       </v-card-actions>
     </v-card>
   </v-form>
 
-  <br /><br /><br /><br />
+  <br><br><br><br>
 
-  <v-card class="mx-auto px-6 py-8" max-width="344">
-    <v-form ref="formRef" v-model="isValidForm">
+  <v-card
+    class="mx-auto px-6 py-8"
+    max-width="344"
+  >
+    <v-form
+      ref="formRef"
+      v-model="isValidForm"
+    >
       <v-text-field
         v-model="form.data.username"
         class="mb-2"
@@ -96,7 +112,7 @@ async function onLoginClick() {
         placeholder="Enter your password"
       />
 
-      <br />
+      <br>
 
       <v-btn
         :disabled="isValidForm || form.pending"
