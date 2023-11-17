@@ -11,7 +11,7 @@ export default defineNuxtConfig({
         process.env.EXTERNAL_API_URL ?? 'set BASE_URL in .env please',
     },
   },
-  css: ['vuetify/lib/styles/main.sass'],
+  css: ['vuetify/lib/styles/main.sass', '~/assets/css/main.css'],
   build: {
     transpile: ['vuetify'],
   },
@@ -27,4 +27,11 @@ export default defineNuxtConfig({
     },
   ],
   devtools: { enabled: true },
+  //
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
 });

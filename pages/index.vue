@@ -10,11 +10,18 @@ const currentUser = useAuthUser();
 
 <template>
   <div>
-    <v-btn :prepend-icon="mdiHumanGreetingVariant" color="blue-darken-1">
-      test
+    <v-btn
+      :prepend-icon="mdiHumanGreetingVariant"
+      color="blue-darken-1"
+    >
+      test vuetify
     </v-btn>
-    <h1>Home</h1>
-    <img src="imgs/avatar1.jpg" alt="no image" class="w-25" />
+    <h1 class="tw-my-3 tw-p-3 tw-text-3xl tw-bg-pink-300">test tailwind</h1>
+    <img
+      src="imgs/avatar1.jpg"
+      alt="no image"
+      class="w-25"
+    />
     <p>current user:{{ currentUser }}</p>
   </div>
 </template>
